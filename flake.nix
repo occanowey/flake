@@ -14,6 +14,8 @@
   in {
     formatter.${system} = pkgs.alejandra;
 
+    packages.${system}.net-debug = pkgs.callPackage ./net-debug.nix {};
+
     homeManagerModules.default = import ./modules/home/defaults/default.nix self;
   };
 }
