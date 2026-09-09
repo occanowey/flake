@@ -7,7 +7,12 @@ buildEnv {
 
   paths = [
     pkgs.dig
-    pkgs.traceroute
     pkgs.tcpdump
+
+    (
+      if pkgs.stdenv.isLinux
+      then pkgs.traceroute
+      else pkgs.inetutils
+    )
   ];
 }

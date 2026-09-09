@@ -9,12 +9,14 @@
     self,
     nixpkgs,
   }: let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {inherit system;};
+    forAllSystems = f:
+      nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-darwin"] (system: f (import nixpkgs {inherit system;}));
   in {
-    formatter.${system} = pkgs.alejandra;
+    formatter = forAllSystems (pkgs: pkgs.alejandra);
 
-    packages.${system}.net-debug = pkgs.callPackage ./net-debug.nix {};
+    packages = forAllSystems (pkgs: {
+      net-debug = pkgs.callPackage ./net-debug.nix {};
+    });
 
     homeManagerModules.default = import ./modules/home/defaults/default.nix self;
 
