@@ -11,7 +11,6 @@
   ];
 
   # -- Shell --
-  programs.bash.enable = true; # enable bash for nix develop shells
   programs.zsh = {
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh";
